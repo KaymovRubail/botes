@@ -41,6 +41,7 @@ async def yesno_answer(call: types.CallbackQuery):
     )
 async def thanks(call: types.CallbackQuery):
     gg=call.data.split(',')
+    print(gg)
     database=ddbb.Database()
     database.create_table_answer()
     await bot.send_message(

@@ -23,5 +23,5 @@ UNIQUE(telegram_user_id)
 )
 '''
 INSERT_ANSWER_TABLE = '''
-INSERT OR IGNORE INTO telegram_users  VALUES (?,?, ?, ?, ?)
+INSERT OR IGNORE INTO answers  VALUES (?,?, ?, ?, ?)
 '''
