@@ -2,8 +2,11 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 async def quest_button():
     markup = InlineKeyboardMarkup()
     qb=InlineKeyboardButton('Quastions', callback_data='question_base')
-    markup.add(qb)
+    qb1 = InlineKeyboardButton('Check for bad user', callback_data='bad')
+    markup.add(qb,qb1)
     return markup
+
+
 async def question_for_transpot_type(var1,var2,var3,var4):
     markup = InlineKeyboardMarkup()
     air=InlineKeyboardButton(var1, callback_data='aa'+var1)
@@ -12,30 +15,40 @@ async def question_for_transpot_type(var1,var2,var3,var4):
     train=InlineKeyboardButton(var4, callback_data='tt'+var4)
     markup.add(air,car,bus,train)
     return markup
+
+
 async def model_airplane(var1,var2,ex):
     markup = InlineKeyboardMarkup()
     air1=InlineKeyboardButton(var1, callback_data='1'+','+var1+','+ex)
     air2=InlineKeyboardButton(var2, callback_data='2'+','+var2+','+ex)
     markup.add(air1,air2)
     return markup
+
+
 async def model_car(var1,var2,ex):
     markup = InlineKeyboardMarkup()
     car1=InlineKeyboardButton(var1, callback_data='3'+','+var1+','+ex)
     car2=InlineKeyboardButton(var2, callback_data='4'+','+var2+','+ex)
     markup.add(car1,car2)
     return markup
+
+
 async def model_train(var1,var2,ex):
     markup = InlineKeyboardMarkup()
     train1=InlineKeyboardButton(var1, callback_data='5'+','+var1+','+ex)
     train2=InlineKeyboardButton(var2, callback_data='6'+','+var2+','+ex)
     markup.add(train1,train2)
     return markup
+
+
 async def model_bus(var1,var2,ex):
     markup = InlineKeyboardMarkup()
     bus1=InlineKeyboardButton(var1, callback_data='7'+','+var1+','+ex)
     bus2=InlineKeyboardButton(var2,callback_data='8'+','+var2+','+ex)
     markup.add(bus1,bus2)
     return markup
+
+
 async def yes_no(var1, var2,ex):
     markup = InlineKeyboardMarkup()
     yesbutton = InlineKeyboardButton(var1, callback_data='yes'+','+ex)

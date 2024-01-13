@@ -43,7 +43,6 @@ async def thanks(call: types.CallbackQuery):
     gg=call.data.split(',')
     print(gg)
     database=ddbb.Database()
-    database.create_table_answer()
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Thank you for answering"
@@ -54,6 +53,23 @@ async def thanks(call: types.CallbackQuery):
         model=gg[1],
         exp=gg[0]
     )
+async def answer_for_ban(call: types.CallbackQuery):
+    datab=ddbb.Database()
+    count=datab.select_count_bun_table(tg_id=call.from_user.id)
+    if count:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text="U r in the bad users list\n"
+                 f"Amount of bad word: {count[0]}"
+        )
+    else:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text="Good for u\n"
+                 "There is no ur name\n"
+                 "Good boy"
+        )
+
 t=[str(i) for i in range(1,9)]
 h=set(t)
 def register_ask(dp: Dispatcher):
@@ -65,3 +81,4 @@ def register_ask(dp: Dispatcher):
     dp.register_callback_query_handler(yesno_answer, lambda call:bool(len(set(call.data).intersection(h))))
     dp.register_callback_query_handler(thanks, lambda call:call.data.startswith("yes"))
     dp.register_callback_query_handler(thanks, lambda call:call.data.startswith("no"))
+    dp.register_callback_query_handler(answer_for_ban, lambda call:call.data=="bad")
