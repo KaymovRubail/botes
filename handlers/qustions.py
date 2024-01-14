@@ -7,10 +7,8 @@ async def ask(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Type of transport u prefer:",
-        reply_markup= await buttons.question_for_transpot_type('Air','Car','Train','Bus')
+        reply_markup= await buttons.question_for_transpot_type('Air✈️','Car🚗','Train🚂','Bus🚌')
     )
-
-
 
 async def answer_airmodel(call: types.CallbackQuery):
     await bot.send_message(
@@ -18,37 +16,47 @@ async def answer_airmodel(call: types.CallbackQuery):
         text="Wich plane do like most:",
         reply_markup= await buttons.model_airplane('Boeing','Airbus',call.data.replace('aa',''))
     )
+
+
 async def answer_carmodel(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Wich car do like most:",
         reply_markup= await buttons.model_car('BMW','Mercedes',call.data.replace('cc',''))
     )
+
+
 async def answer_Busmodel(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Wich bus do like most:",
         reply_markup= await buttons.model_bus('London Routemaster (London Bus)','Mercedes-Benz Citaro (Various Cities Worldwide)',call.data.replace('bb',''))
     )
+
+
 async def answer_trainmodel(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Wich train do like most:",
         reply_markup= await buttons.model_train('Shinkansen (Bullet Train) - Japan','TGV (Train à Grande Vitesse) - France',call.data.replace('tt',''))
     )
+
+
 async def yesno_answer(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Have u ever been on it:",
-        reply_markup=await buttons.yes_no("yes","no",call.data[2:])
+        reply_markup=await buttons.yes_no("yes✅","no❌",call.data[2:])
     )
+
+
 async def thanks(call: types.CallbackQuery):
     gg=call.data.split(',')
     print(gg)
     database=ddbb.Database()
     await bot.send_message(
         chat_id=call.from_user.id,
-        text="Thank you for answering"
+        text="Thank you for answering 🙏🫂"
     )
     database.insert_answer(
         telegram_id=call.from_user.id,
@@ -56,6 +64,8 @@ async def thanks(call: types.CallbackQuery):
         model=gg[1],
         exp=gg[0]
     )
+
+
 async def answer_for_ban(call: types.CallbackQuery):
     datab=ddbb.Database()
     count=datab.select_count_bun_table(tg_id=call.from_user.id)
@@ -73,7 +83,27 @@ async def answer_for_ban(call: types.CallbackQuery):
                  "Good boy"
         )
 
-
+async def warn_user(call: types.CallbackQuery):
+    data=ddbb.Database()
+    userban = data.seletc_from_ban()
+    user_ban_id = [i[0] for i in userban if i[0] != int(admin)]
+    user_ban_name = [i[1:] for i in userban if i[0] != int(admin)]
+    user_ban_count=[i[2] for i in userban if i[0]!=int(admin)]
+    for i in range(len(user_ban_id)):
+        try:
+            await bot.send_message(
+                chat_id=user_ban_id[i]
+                , text=f"Hi {user_ban_name[i][0]}\n"
+                       f"U have written {user_ban_count[i]} bad word\n"
+                       "If u do it 3rd time\n"
+                       "U will be bunned📛"
+            )
+        except Exception as e:
+            pass
+    await bot.send_message(
+        chat_id=call.from_user.id,
+        text='Done✅'
+    )
 
 
 t=[str(i) for i in range(1,9)]
@@ -88,3 +118,4 @@ def register_ask(dp: Dispatcher):
     dp.register_callback_query_handler(thanks, lambda call:call.data.startswith("yes"))
     dp.register_callback_query_handler(thanks, lambda call:call.data.startswith("no"))
     dp.register_callback_query_handler(answer_for_ban, lambda call:call.data=="bad")
+    dp.register_callback_query_handler(warn_user, lambda call:call.data=="warn")

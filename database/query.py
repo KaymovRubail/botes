@@ -34,11 +34,12 @@ CREATE_BAN_TABLE = '''
 CREATE TABLE IF NOT EXISTS bans(
 id INTEGER PRIMARY KEY,
 tg_id INTEGER,
+first_name CHAR(20),
 countt INTEGER,
 UNIQUE(tg_id)
 )'''
 INSERT_BAN_TABLE = '''
-INSERT OR IGNORE INTO bans  VALUES (?,?,?)
+INSERT OR IGNORE INTO bans  VALUES (?,?,?,?)
 '''
 
 SELECT_BAN_TABLE_COUNT = '''
@@ -51,4 +52,4 @@ DELETE_USER = '''
 DELETE FROM bans WHERE tg_id=?
 '''
 SELECT_USER_FROM_BAN = '''
-SELECT tg_id,countt FROM bans'''
+SELECT tg_id,first_name,countt FROM bans'''

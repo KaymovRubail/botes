@@ -10,7 +10,7 @@ async def foradmin(m:types.Message):
             await bot.send_message(
                 chat_id=m.from_user.id,
                 text=f'Welcome to Admins menu {m.from_user.first_name}!',
-                reply_markup=await menu_buttons.menu_buttons_for_admin("See all users", "See all bad users")
+                reply_markup=await menu_buttons.menu_buttons_for_admin("See all users📃", "See all bad users👿")
             )
         else:
             await bot.send_message(

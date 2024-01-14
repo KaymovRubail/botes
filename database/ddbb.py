@@ -18,8 +18,8 @@ class Database:
     def insert_answer(self,telegram_id,type,model,exp):
         self.cursor.execute(query.INSERT_ANSWER_TABLE, (None,telegram_id,type,model,exp))
         self.connection.commit()
-    def inseert_ban(self,tg_id):
-        self.cursor.execute(query.INSERT_BAN_TABLE, (None,tg_id,0))
+    def inseert_ban(self,tg_id,first_name):
+        self.cursor.execute(query.INSERT_BAN_TABLE, (None,tg_id,first_name,0))
         self.connection.commit()
     def select_count_bun_table(self,tg_id):
         self.cursor.execute(query.SELECT_BAN_TABLE_COUNT, (tg_id,))

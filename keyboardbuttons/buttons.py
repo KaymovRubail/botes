@@ -1,8 +1,8 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 async def quest_button():
     markup = InlineKeyboardMarkup()
-    qb=InlineKeyboardButton('Quastions', callback_data='question_base')
-    qb1 = InlineKeyboardButton('Check for bad user', callback_data='bad')
+    qb=InlineKeyboardButton('Quastions❔', callback_data='question_base')
+    qb1 = InlineKeyboardButton('Check for bad user📛', callback_data='bad')
     markup.add(qb,qb1)
     return markup
 
@@ -54,4 +54,10 @@ async def yes_no(var1, var2,ex):
     yesbutton = InlineKeyboardButton(var1, callback_data='yes'+','+ex)
     nobutton = InlineKeyboardButton(var2, callback_data='no'+','+ex)
     markup.add(yesbutton, nobutton)
+    return markup
+
+async def write_all_userd_button():
+    markup = InlineKeyboardMarkup()
+    a=InlineKeyboardButton("warn all users⚠️",callback_data='warn')
+    markup.add(a)
     return markup
