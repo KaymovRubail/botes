@@ -38,3 +38,10 @@ class Database:
         self.cursor.execute(query.SELECT_USER_FROM_BAN)
         rows = self.cursor.fetchall()
         return rows
+    def select_user_answer(self,tg_id):
+        self.cursor.execute(query.SELECT_USER_FROM_ANSWER,(tg_id,))
+        row = self.cursor.fetchone()
+        return row
+    def update_user_answer(self,transport_type,model,experience,telegram_user_id):
+        self.cursor.execute(query.UPDATE_ANSWER_TABLE,(transport_type,model,experience,telegram_user_id))
+        self.connection.commit()

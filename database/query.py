@@ -28,8 +28,12 @@ UNIQUE(telegram_user_id)
 )
 '''
 INSERT_ANSWER_TABLE = '''
-INSERT OR IGNORE INTO answers  VALUES (?,?, ?, ?, ?)
+INSERT INTO answers  VALUES (?,?, ?, ?, ?)
 '''
+UPDATE_ANSWER_TABLE = '''
+UPDATE answers SET transport_type = ?, model = ?, experience =? WHERE telegram_user_id = ?
+'''
+
 CREATE_BAN_TABLE = '''
 CREATE TABLE IF NOT EXISTS bans(
 id INTEGER PRIMARY KEY,
@@ -53,3 +57,7 @@ DELETE FROM bans WHERE tg_id=?
 '''
 SELECT_USER_FROM_BAN = '''
 SELECT tg_id,first_name,countt FROM bans'''
+
+SELECT_USER_FROM_ANSWER = '''
+SELECT telegram_user_id FROM answers WHERE telegram_user_id=?
+'''

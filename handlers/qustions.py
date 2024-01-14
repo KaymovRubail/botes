@@ -3,12 +3,21 @@ from config import bot,admin
 from keyboardbuttons import buttons
 from database import ddbb
 async def ask(call: types.CallbackQuery):
-    print(call.from_user)
-    await bot.send_message(
-        chat_id=call.from_user.id,
-        text="Type of transport u prefer:",
-        reply_markup= await buttons.question_for_transpot_type('Air✈️','Car🚗','Train🚂','Bus🚌')
-    )
+    data=ddbb.Database()
+    check=data.select_user_answer(tg_id=call.from_user.id)
+    if not check:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text="Type of transport u prefer:",
+            reply_markup=await buttons.question_for_transpot_type('Air✈️', 'Car🚗', 'Train🚂', 'Bus🚌')
+        )
+    else:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text="U have already answered\n"
+                 "If u want rewrite press 'rewrite' button",
+            reply_markup= await buttons.rewrite()
+        )
 
 async def answer_airmodel(call: types.CallbackQuery):
     await bot.send_message(
@@ -58,13 +67,20 @@ async def thanks(call: types.CallbackQuery):
         chat_id=call.from_user.id,
         text="Thank you for answering 🙏🫂"
     )
-    database.insert_answer(
-        telegram_id=call.from_user.id,
-        type=gg[2],
-        model=gg[1],
-        exp=gg[0]
-    )
-
+    try:
+        database.insert_answer(
+            telegram_id=call.from_user.id,
+            type=gg[2],
+            model=gg[1],
+            exp=gg[0]
+        )
+    except Exception as e:
+        database.update_user_answer(
+            transport_type=gg[2]
+            ,model=gg[1]
+            ,experience=gg[0]
+            ,telegram_user_id=call.from_user.id
+        )
 
 async def answer_for_ban(call: types.CallbackQuery):
     datab=ddbb.Database()
@@ -105,6 +121,12 @@ async def warn_user(call: types.CallbackQuery):
         text='Done✅'
     )
 
+async def rewrite_ask(call: types.CallbackQuery):
+    await bot.send_message(
+        chat_id=call.from_user.id,
+        text="Type of transport u prefer:",
+        reply_markup=await buttons.question_for_transpot_type('Air✈️', 'Car🚗', 'Train🚂', 'Bus🚌')
+    )
 
 t=[str(i) for i in range(1,9)]
 h=set(t)
@@ -119,3 +141,4 @@ def register_ask(dp: Dispatcher):
     dp.register_callback_query_handler(thanks, lambda call:call.data.startswith("no"))
     dp.register_callback_query_handler(answer_for_ban, lambda call:call.data=="bad")
     dp.register_callback_query_handler(warn_user, lambda call:call.data=="warn")
+    dp.register_callback_query_handler(rewrite_ask, lambda call:call.data=="re")

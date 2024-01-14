@@ -61,3 +61,9 @@ async def write_all_userd_button():
     a=InlineKeyboardButton("warn all users⚠️",callback_data='warn')
     markup.add(a)
     return markup
+
+async def rewrite():
+    markup = InlineKeyboardMarkup()
+    a=InlineKeyboardButton("Rewrite✏️",callback_data='re')
+    markup.add(a)
+    return markup
