@@ -8,6 +8,11 @@ last_name CHAR(20),
 UNIQUE(telegram_user_id)
 )
 '''
+SELECT_FROM_USER_TABLE = '''
+SELECT telegram_user_id,first_name FROM telegram_users
+'''
+
+
 INSERT_USER_TABLE = '''
 INSERT OR IGNORE INTO telegram_users  VALUES (?,?, ?, ?, ?)
 '''
@@ -45,3 +50,5 @@ UPDATE bans SET countt=countt+1 WHERE tg_id=?
 DELETE_USER = '''
 DELETE FROM bans WHERE tg_id=?
 '''
+SELECT_USER_FROM_BAN = '''
+SELECT tg_id,countt FROM bans'''

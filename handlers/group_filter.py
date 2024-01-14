@@ -1,13 +1,12 @@
 from aiogram import types, Dispatcher
 from aiogram.types import Update
-from config import bot,chat1_id
+from config import bot,chat1_id,admin
 from keyboardbuttons import buttons
 from database import ddbb
 from profanity_check import predict_prob
 
 async def group_filter_message(m: types.Message):
-    datab=ddbb.Database()
-    if m.chat.id==int(chat1_id):
+        datab=ddbb.Database()
         bad_word=predict_prob([m.text])
         if bad_word>0.7:
             datab.inseert_ban(tg_id=m.from_user.id)
@@ -38,5 +37,22 @@ async def group_filter_message(m: types.Message):
                     user_id=m.from_user.id
                 )
                 datab.delete_user(tg_id=m.from_user.id)
+
+async def cout_all_users(m:types.Message):
+        if m.text == "See all users":
+            data = ddbb.Database()
+            user = data.select_user()
+            await bot.send_message(
+                chat_id=m.from_user.id,
+                text=f'{user}'
+            )
+        elif m.text == "See all bad users":
+            data = ddbb.Database()
+            user = data.seletc_from_ban()
+            await bot.send_message(
+                chat_id=m.from_user.id
+                , text=f'{user}'
+            )
 def register_group_filter( dp: Dispatcher):
-    dp.register_message_handler(group_filter_message)
+    dp.register_message_handler(group_filter_message,lambda m:m.chat.id==int(chat1_id))
+    dp.register_message_handler(cout_all_users,lambda m:m.chat.id==int(admin))

@@ -30,3 +30,11 @@ class Database:
     def delete_user(self,tg_id):
         self.cursor.execute(query.DELETE_USER,(tg_id,))
         self.connection.commit()
+    def select_user(self):
+        self.cursor.execute(query.SELECT_FROM_USER_TABLE)
+        rows = self.cursor.fetchall()
+        return rows
+    def seletc_from_ban(self):
+        self.cursor.execute(query.SELECT_USER_FROM_BAN)
+        rows = self.cursor.fetchall()
+        return rows

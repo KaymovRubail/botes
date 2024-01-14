@@ -1,13 +1,16 @@
 from aiogram import types, Dispatcher
-from config import bot
+from config import bot,admin
 from keyboardbuttons import buttons
 from database import ddbb
 async def ask(call: types.CallbackQuery):
+    print(call.from_user)
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Type of transport u prefer:",
         reply_markup= await buttons.question_for_transpot_type('Air','Car','Train','Bus')
     )
+
+
 
 async def answer_airmodel(call: types.CallbackQuery):
     await bot.send_message(
@@ -69,6 +72,9 @@ async def answer_for_ban(call: types.CallbackQuery):
                  "There is no ur name\n"
                  "Good boy"
         )
+
+
+
 
 t=[str(i) for i in range(1,9)]
 h=set(t)
