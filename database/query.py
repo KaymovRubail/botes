@@ -21,6 +21,7 @@ CREATE_ANSWER_TABLE = '''
 CREATE TABLE IF NOT EXISTS answers(
 id INTEGER PRIMARY KEY,
 telegram_user_id INTEGER,
+first_name CHAR(20),
 transport_type CHAR(20) ,
 model CHAR(20),
 experience CHAR(20),
@@ -28,12 +29,20 @@ UNIQUE(telegram_user_id)
 )
 '''
 INSERT_ANSWER_TABLE = '''
-INSERT INTO answers  VALUES (?,?, ?, ?, ?)
+INSERT INTO answers  VALUES (?,?, ?, ?, ?,?)
 '''
 UPDATE_ANSWER_TABLE = '''
 UPDATE answers SET transport_type = ?, model = ?, experience =? WHERE telegram_user_id = ?
 '''
-
+SELECT_ANSWER_TABLE = '''
+SELECT first_name,transport_type,model,experience FROM answers
+'''
+SELECT_USER_FROM_ANSWER = '''
+SELECT telegram_user_id FROM answers WHERE telegram_user_id=?
+'''
+SELECT_ALL_ID_ANSWER='''
+SELECT telegram_user_id FROM answers
+'''
 CREATE_BAN_TABLE = '''
 CREATE TABLE IF NOT EXISTS bans(
 id INTEGER PRIMARY KEY,
@@ -58,6 +67,4 @@ DELETE FROM bans WHERE tg_id=?
 SELECT_USER_FROM_BAN = '''
 SELECT tg_id,first_name,countt FROM bans'''
 
-SELECT_USER_FROM_ANSWER = '''
-SELECT telegram_user_id FROM answers WHERE telegram_user_id=?
-'''
+

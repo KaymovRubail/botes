@@ -112,6 +112,28 @@ async def cout_all_users(m:types.Message):
                         chat_id=m.from_user.id
                         , text=f'I have no chance to write anybody'
                     )
+        elif m.text=="See all users answer🙈":
+            users=data.select_all_user_answer()
+            ids=data.select_all_id_answer()
+            if users is not None:
+                await bot.send_message(
+                    chat_id=m.from_user.id
+                    , text=f'Here are the user answers🅰️'
+                )
+                for i in range(len(ids)):
+                    ii=list(users[i])
+                    idd=ids[i][0]
+                    link=f'tg://user?id={idd}'
+                    await bot.send_message(
+                        chat_id=m.from_user.id
+                        , text=f"{ii}\n"
+                               f"link: {link}"
+                    )
+            else:
+                await bot.send_message(
+                    chat_id=m.from_user.id,
+                    text=f'There are no users🥲'
+                )
 def register_group_filter( dp: Dispatcher):
     dp.register_message_handler(group_filter_message,lambda m:m.chat.id==int(chat1_id))
     dp.register_message_handler(cout_all_users,lambda m:m.chat.id==int(admin))

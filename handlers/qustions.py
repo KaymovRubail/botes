@@ -70,6 +70,7 @@ async def thanks(call: types.CallbackQuery):
     try:
         database.insert_answer(
             telegram_id=call.from_user.id,
+            name=call.from_user.first_name,
             type=gg[2],
             model=gg[1],
             exp=gg[0]
